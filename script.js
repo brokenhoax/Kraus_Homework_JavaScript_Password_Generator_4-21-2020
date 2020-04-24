@@ -27,8 +27,8 @@ function getLength() {
 
 // Generate Random Values Functions
 
-function getRandomLower() {
-  var pwLowerReq = confirm("Click 'Ok' to include Lower-Case Characters. Click 'Cancel' to disclude Lower-Case Characters.");
+function getRandomLower(pwLowerReq) {
+
   if (pwLowerReq === true) {
     return String.fromCharCode(Math.floor(Math.random() * 26) + 97);
   }
@@ -39,8 +39,8 @@ function getRandomLower() {
 // var lower = getRandomLower();
 // console.log(lower);
 
-function getRandomUpper() {
-  var pwUpperReq = confirm("Click 'Ok' to include Upper-Case Characters. Click 'Cancel' to disclude Upper-Case Characters.");
+function getRandomUpper(pwUpperReq) {
+
   if (pwUpperReq === true) {
   return String.fromCharCode(Math.floor(Math.random() * 26) + 65);
   }
@@ -51,8 +51,7 @@ function getRandomUpper() {
 // var upper = getRandomUpper();
 // console.log(upper);
 
-function getRandomNumber() {
-  var pwNumReq = confirm("Click 'Ok' to include Numbers. Click 'Cancel' to disclude Numbers.");
+function getRandomNumber(pwNumReq) {
   if (pwNumReq === true) {
     return String.fromCharCode(Math.floor(Math.random() * 10) + 48);
   }
@@ -63,11 +62,10 @@ function getRandomNumber() {
 // var number = getRandomNumber();
 // console.log(number);
 
-function getRandomSymbol() {
-  var pwSymReq = confirm("Click 'Ok' to include Special Characters. Click 'Cancel' to disclude Special Characters.");
+function getRandomSymbol(pwSymReq) {
   const symbols = '!@#$%^&*()=+[{]},<.>/?'
   if (pwSymReq === true) {
-    return symbols[Math.floor(Math.random() * symbols.length)];
+    return symbols[Math.floor(Math.random() * symbols.length)]; //<--- assign value, console log that result, return that result
     }
     else {
       return '';
@@ -80,17 +78,29 @@ function getRandomSymbol() {
 // Generate Password Function
 
 function generatePassword(){
-  var length = getLength();
-  var symbol = getRandomSymbol();
-  var lower = getRandomLower();
-  var upper = getRandomUpper();
-  var number = getRandomNumber();
+  var passwordLength = getLength();
+  var pwSymReq = confirm("Click 'Ok' to include Special Characters. Click 'Cancel' to disclude Special Characters.");
+  var pwNumReq = confirm("Click 'Ok' to include Numbers. Click 'Cancel' to disclude Numbers.");
+  var pwUpperReq = confirm("Click 'Ok' to include Upper-Case Characters. Click 'Cancel' to disclude Upper-Case Characters.");
+  var pwLowerReq = confirm("Click 'Ok' to include Lower Case. Click 'Cancel' to disclude Numbers.");
   var generatedPassword = [];
-  for (i = 0; i <= length; i++) {
-    generatedPassword = generatedPassword.push(lower, upper, number, symbol);
-    return generatedPassword; 
+
+  for (i = 0; i <= passwordLength; i++) {
+    var symbol = getRandomSymbol(pwSymReq);
+    var lower = getRandomLower(pwLowerReq);
+    var upper = getRandomUpper(pwUpperReq);
+    var number = getRandomNumber(pwNumReq);
+    generatedPassword.push(lower, upper, number, symbol);
+// console.log each one of these values. 
+// grab the prompt info, put prompts in the top of the generate function
   }
+  return generatedPassword; 
 }
+//Take return out of for loop - below line 92...
+// because of return for loop runs one interation and doesn't occur again...
+// final password.join
+
+
 // var finalPassword = generatePassword();
 //   console.log(finalPassword);
 
@@ -100,5 +110,15 @@ function generatePassword(){
 generateBtn.addEventListener("click", function writePassword() {
   var finalPassword = generatePassword();
   var passwordText = document.querySelector("#password");
-  passwordText.value = finalPassword;
+    passwordText.value = finalPassword.join('');
+    console.log(finalPassword)
 }); 
+
+
+// empty '' otherwise get commas
+
+// symbol = symbol + getRandomSymbol();
+
+// userScore = userScore + userCardChoice();
+
+//console log every function 
